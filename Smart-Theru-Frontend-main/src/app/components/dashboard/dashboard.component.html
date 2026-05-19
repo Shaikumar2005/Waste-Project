@@ -1,0 +1,83 @@
+<div class="dashboard">
+
+  <h2>Admin Dashboard</h2>
+
+  <button class="primary-btn" (click)="toggleAddCollector()">
+    + Add Collector
+  </button>
+
+  <!-- Add Collector Form -->
+  <div *ngIf="showAddCollector" class="form-card">
+
+    <h3>Add New Collector</h3>
+
+    <label>Collector Name</label>
+    <input
+      type="text"
+      [(ngModel)]="collectorName"
+      placeholder="Enter collector name"
+    />
+
+    <label>Vehicle ID</label>
+    <input
+      type="text"
+      [(ngModel)]="vehicleId"
+      placeholder="TRUCK01"
+    />
+
+    <div class="form-actions">
+      <button class="save-btn" (click)="saveCollector()">Save</button>
+      <button class="cancel-btn" (click)="toggleAddCollector()">Cancel</button>
+    </div>
+
+  
+
+
+  </div>
+<!-- Quick Actions Section -->
+<div class="dashboard-section">
+
+  <h3>Quick Actions</h3>
+
+  <div class="actions-grid">
+
+    <div class="action-card" routerLink="/routes">
+      <h4>Create Routes</h4>
+      <p>Design garbage collection routes using map.</p>
+      <span>Open Routes</span>
+    </div>
+
+    <div class="action-card" routerLink="/assign-routes">
+      <h4>Assign Routes</h4>
+      <p>Assign routes to collectors and vehicles.</p>
+      <span>Assign Now</span>
+    </div>
+
+    <div class="action-card" routerLink="/track-assigned-routes">
+      <h4>Track Routes</h4>
+      <p>Monitor assigned routes and live progress.</p>
+      <span>Track Live</span>
+    </div>
+
+    <div class="action-card" routerLink="/reports">
+      <h4>View Reports</h4>
+      <p>Analyze system performance and activity.</p>
+      <span>Open Reports</span>
+    </div>
+
+  </div>
+
+<div class="dashboard-section info">
+
+  <h3>Administrator Notes</h3>
+
+  <ul>
+    <li>Ensure each collector is assigned a unique vehicle ID.</li>
+    <li>Routes should be verified on the map before assignment.</li>
+    <li>Use the Reports section for analytics and audit purposes.</li>
+    <li>De‑assign routes if schedules change.</li>
+  </ul>
+
+</div>
+</div>
+</div>
