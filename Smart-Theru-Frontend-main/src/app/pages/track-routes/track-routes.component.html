@@ -1,7 +1,36 @@
 <div class="page">
-  <h2>Track Assigned Routes</h2>
 
-  <div class="map-placeholder">
-    Live Google Map will appear here
+  <div class="header">
+    <h2>Track Assigned Routes</h2>
+    <p>Live Smart Waste Vehicle Tracking</p>
   </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+
+  <div class="route-info">
+
+    <div class="info-card">
+      <h3>Vehicle Status</h3>
+      <p>{{ vehicleStatus }}</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Latitude</h3>
+      <p>{{ latitude }}</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Longitude</h3>
+      <p>{{ longitude }}</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Last Updated</h3>
+      <p>{{ lastUpdated }}</p>
+    </div>
+
+  </div>
+
 </div>
