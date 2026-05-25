@@ -1,28 +1,40 @@
 package com.smartwaste.backend.controller;
 
-import com.smartwaste.backend.entity.Location;
-import com.smartwaste.backend.repository.LocationRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/location")
+@RequestMapping("/api")
 @CrossOrigin("*")
 public class LocationController {
 
-    @Autowired
-    private LocationRepository repository;
+    private double latitude;
+    private double longitude;
 
-    @PostMapping
-    public Location saveLocation(@RequestBody Location location) {
-        return repository.save(location);
+    // Receive GPS Data from ESP32
+    @PostMapping("/location")
+    public String receiveLocation(@RequestBody Map<String, Object> data) {
+
+        latitude = Double.parseDouble(data.get("latitude").toString());
+        longitude = Double.parseDouble(data.get("longitude").toString());
+
+        System.out.println("Location Updated");
+        System.out.println(latitude);
+        System.out.println(longitude);
+
+        return "Location Received Successfully";
     }
 
-    @GetMapping
-    public List<Location> getLocations() {
-        return repository.findAll();
+    // Send Location to Frontend
+    @GetMapping("/location")
+    public Map<String, Double> getLocation() {
+
+        Map<String, Double> response = new HashMap<>();
+
+        response.put("latitude", latitude);
+        response.put("longitude", longitude);
+
+        return response;
     }
 }
