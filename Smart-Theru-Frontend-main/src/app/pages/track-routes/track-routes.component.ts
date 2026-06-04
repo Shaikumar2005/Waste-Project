@@ -1,82 +1,49 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-declare var google: any;
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-routes',
-  standalone: false,
+  selector: 'app-track-routes',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './track-routes.component.html',
   styleUrls: ['./track-routes.component.css']
 })
-export class RoutesComponent implements AfterViewInit {
-
-  map: any;
-  marker: any;
+export class TrackRoutesComponent implements OnInit {
 
   latitude: number = 0;
   longitude: number = 0;
-  vehicleStatus: string = "Active";
-  lastUpdated: string = "";
 
-  constructor(private http: HttpClient) {}
+  vehicleStatus: string = 'Offline';
+  lastUpdated: string = '-';
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
 
-    this.initializeMap();
-
-    this.fetchLiveLocation();
+    this.loadLocation();
 
     setInterval(() => {
-      this.fetchLiveLocation();
-    }, 3000);
+      this.loadLocation();
+    }, 2000);
+
   }
 
-  initializeMap() {
+  loadLocation() {
 
-    const defaultLocation = {
-      lat: 13.0827,
-      lng: 80.2707
-    };
+    fetch('http://localhost:8080/api/location')
+      .then(response => response.json())
+      .then(data => {
 
-    this.map = new google.maps.Map(
-      document.getElementById("map"),
-      {
-        center: defaultLocation,
-        zoom: 14
-      }
-    );
+        this.latitude = data.latitude;
+        this.longitude = data.longitude;
 
-    this.marker = new google.maps.Marker({
-      position: defaultLocation,
-      map: this.map,
-      title: "Smart Waste Vehicle"
-    });
-  }
+        this.vehicleStatus = 'Tracking';
+        this.lastUpdated = new Date().toLocaleTimeString();
 
-  fetchLiveLocation() {
+      })
+      .catch(error => {
 
-    this.http.get<any>('http://localhost:8080/api/location')
-      .subscribe((data) => {
+        console.error('Location Fetch Error:', error);
 
-        if (data.length > 0) {
-
-          const latest = data[data.length - 1];
-
-          this.latitude = latest.latitude;
-          this.longitude = latest.longitude;
-
-          this.lastUpdated = new Date().toLocaleTimeString();
-
-          const newPosition = {
-            lat: this.latitude,
-            lng: this.longitude
-          };
-
-          this.marker.setPosition(newPosition);
-
-          this.map.setCenter(newPosition);
-        }
+        this.vehicleStatus = 'Offline';
 
       });
   }

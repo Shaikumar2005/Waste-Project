@@ -5,14 +5,10 @@
     <p>Live Smart Waste Vehicle Tracking</p>
   </div>
 
-  <div class="map-container">
-    <div id="map"></div>
-  </div>
-
   <div class="route-info">
 
     <div class="info-card">
-      <h3>Vehicle Status</h3>
+      <h3>Vehicle 1 Status</h3>
       <p>{{ vehicleStatus }}</p>
     </div>
 
@@ -32,5 +28,15 @@
     </div>
 
   </div>
+
+  <br>
+
+  <a
+    [href]="'https://maps.google.com/?q=' + latitude + ',' + longitude"
+    target="_blank">
+
+    📍 Open Location in Google Maps
+
+  </a>
 
 </div>
